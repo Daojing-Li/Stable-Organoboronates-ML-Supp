@@ -1,4 +1,4 @@
-This document contains supplementary information pertaining to the machine learning aspects of our study titled "**Stable Organoboronates as Superbase Precursors for (Hetero)arene C−H Borylation Reaction and Beyond**". 
+This document contains supplementary information pertaining to the machine learning aspects of our study titled "**Organometallic-type reactivity of stable organoboronates for selective (hetero)arene C−H/C-halogen borylation and beyond**". 
 
 The supplementary material includes:
 
