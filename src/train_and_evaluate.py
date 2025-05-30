@@ -62,40 +62,40 @@ def train_and_evaluate(model_class, X, y, random_state=42, n_trials=100, n_jobs=
             }
         elif model_class == ElasticNet:
             params = {
-                "alpha": trial.suggest_float("alpha", 1e-1, 100.0, log=True),  # 增大正则化强度
-                "l1_ratio": trial.suggest_float("l1_ratio", 0.1, 0.9),  # 保持L1比例范围
-                "max_iter": 50000,  # 显著增加最大迭代次数
-                "tol": trial.suggest_float("tol", 1e-3, 1e-1, log=True),  # 显著放宽收敛容差
-                "selection": "cyclic",  # 使用循环选择策略
+                "alpha": trial.suggest_float("alpha", 1e-1, 100.0, log=True),  # Increase regularization strength
+                "l1_ratio": trial.suggest_float("l1_ratio", 0.1, 0.9),  # Keep L1 ratio range
+                "max_iter": 50000,  # Significantly increase max iterations
+                "tol": trial.suggest_float("tol", 1e-3, 1e-1, log=True),  # Significantly relax convergence tolerance
+                "selection": "cyclic",  # Use cyclic selection strategy
                 "random_state": 42,
                 "fit_intercept": True,
-                "normalize": True,  # 启用特征归一化
+                "normalize": True,  # Enable feature normalization
                 "precompute": True,
                 "warm_start": True,
-                # "positive": True,  # 强制系数为正（如果您的问题中系数应该为正）
+                # "positive": True,  # Force coefficients to be positive (if coefficients should be positive in your problem)
                 "copy_X": True
             }
         elif model_class == SVR:
             params = {
-                "C": trial.suggest_float("C", 1e-1, 1e3, log=True),  # 扩大C的范围
+                "C": trial.suggest_float("C", 1e-1, 1e3, log=True),  # Expand C range
                 "epsilon": trial.suggest_float("epsilon", 1e-2, 10, log=True),
                 "kernel": "rbf",
-                "gamma": trial.suggest_float("gamma", 1e-2, 10, log=True),  # 扩大gamma的范围
+                "gamma": trial.suggest_float("gamma", 1e-2, 10, log=True),  # Expand gamma range
                 "tol": 1e-3,
-                "max_iter": 10000,  # 增加最大迭代次数
+                "max_iter": 10000,  # Increase max iterations
                 "cache_size": 1000,
                 # "shrinking": True,
             }
         elif model_class == DecisionTreeRegressor:
             params = {
-                "max_depth": trial.suggest_int("max_depth", 5, 15),  # 允许更深的树
-                "min_samples_split": trial.suggest_int("min_samples_split", 2, 5),  # 减小分裂所需的最小样本数
-                "min_samples_leaf": trial.suggest_int("min_samples_leaf", 1, 3),  # 允许更小的叶节点
-                "criterion": trial.suggest_categorical("criterion", ["squared_error", "friedman_mse"]),  # 专注于均方误差相关指标
-                "splitter": "best",  # 固定为最佳分裂
-                "max_features": None,  # 使用所有特征
+                "max_depth": trial.suggest_int("max_depth", 5, 15),  # Allow deeper trees
+                "min_samples_split": trial.suggest_int("min_samples_split", 2, 5),  # Reduce min samples for splits
+                "min_samples_leaf": trial.suggest_int("min_samples_leaf", 1, 3),  # Allow smaller leaf nodes
+                "criterion": trial.suggest_categorical("criterion", ["squared_error", "friedman_mse"]),  # Focus on MSE-related metrics
+                "splitter": "best",  # Fixed to best split
+                "max_features": None,  # Use all features
                 "random_state": 42,
-                "ccp_alpha": trial.suggest_float("ccp_alpha", 0.0, 0.05),  # 添加剪枝参数
+                "ccp_alpha": trial.suggest_float("ccp_alpha", 0.0, 0.05),  # Add pruning parameter
             }
         elif model_class == RandomForestRegressor:
             params = {
@@ -109,41 +109,41 @@ def train_and_evaluate(model_class, X, y, random_state=42, n_trials=100, n_jobs=
             }
         elif model_class == GradientBoostingRegressor:
             params = {
-                "n_estimators": trial.suggest_int("n_estimators", 50, 150),  # 适度的树数量
-                "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.1, log=True),  # 回到更小的学习率范围
-                "max_depth": trial.suggest_int("max_depth", 2, 4),  # 中等树深度
-                "min_samples_split": trial.suggest_int("min_samples_split", 3, 8),  # 适度的分裂要求
-                "min_samples_leaf": trial.suggest_int("min_samples_leaf", 2, 5),  # 适度的叶节点要求
-                "subsample": trial.suggest_float("subsample", 0.5, 0.9),  # 更平衡的采样率
-                "max_features": trial.suggest_float("max_features", 0.5, 0.9),  # 更平衡的特征选择
-                "loss": "squared_error",  # 回到标准均方误差损失函数
+                "n_estimators": trial.suggest_int("n_estimators", 50, 150),  # Moderate number of trees
+                "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.1, log=True),  # Return to smaller learning rate range
+                "max_depth": trial.suggest_int("max_depth", 2, 4),  # Medium tree depth
+                "min_samples_split": trial.suggest_int("min_samples_split", 3, 8),  # Moderate split requirements
+                "min_samples_leaf": trial.suggest_int("min_samples_leaf", 2, 5),  # Moderate leaf node requirements
+                "subsample": trial.suggest_float("subsample", 0.5, 0.9),  # More balanced sampling rate
+                "max_features": trial.suggest_float("max_features", 0.5, 0.9),  # More balanced feature selection
+                "loss": "squared_error",  # Return to standard squared error loss function
                 "random_state": 42,
-                # 早停机制
-                # "validation_fraction": 0.2,  # 使用20%数据作为验证集
-                "n_iter_no_change": 10,  # 10次迭代无改善则停止
-                "tol": 1e-4  # 合理的容差阈值
+                # Early stopping mechanism
+                # "validation_fraction": 0.2,  # Use 20% data as validation set
+                "n_iter_no_change": 10,  # Stop after 10 iterations without improvement
+                "tol": 1e-4  # Reasonable tolerance threshold
             }
         elif model_class == XGBRegressor:
             params = {
-                "n_estimators": trial.suggest_int("n_estimators", 50, 200),  # 减少最大树数量
-                "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.2, log=True),  # 提高学习率下限
-                "max_depth": trial.suggest_int("max_depth", 2, 4),  # 限制树的深度
-                "min_child_weight": trial.suggest_int("min_child_weight", 3, 10),  # 大幅增加子节点权重要求
-                "subsample": trial.suggest_float("subsample", 0.5, 0.8),  # 减少每棵树使用的样本比例
-                "colsample_bytree": trial.suggest_float("colsample_bytree", 0.5, 0.8),  # 减少每棵树使用的特征比例
-                "colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.5, 0.8),  # 在每个级别上随机选择特征
-                "gamma": trial.suggest_float("gamma", 0.1, 5.0),  # 增加进行分裂所需的最小损失减少值
-                "reg_alpha": trial.suggest_float("reg_alpha", 0.1, 10.0, log=True),  # 增强L1正则化
-                "reg_lambda": trial.suggest_float("reg_lambda", 1.0, 10.0, log=True),  # 增强L2正则化
-                "scale_pos_weight": 1,  # 平衡权重
-                "base_score": 0.5,  # 初始预测分数
-                "max_delta_step": trial.suggest_int("max_delta_step", 0, 5),  # 限制每棵树的权重估计
-                "grow_policy": "depthwise",  # 标准生长策略
+                "n_estimators": trial.suggest_int("n_estimators", 50, 200),  # Reduce max number of trees
+                "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.2, log=True),  # Increase learning rate lower bound
+                "max_depth": trial.suggest_int("max_depth", 2, 4),  # Limit tree depth
+                "min_child_weight": trial.suggest_int("min_child_weight", 3, 10),  # Significantly increase child weight requirements
+                "subsample": trial.suggest_float("subsample", 0.5, 0.8),  # Reduce sample proportion for each tree
+                "colsample_bytree": trial.suggest_float("colsample_bytree", 0.5, 0.8),  # Reduce feature proportion for each tree
+                "colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.5, 0.8),  # Randomly select features at each level
+                "gamma": trial.suggest_float("gamma", 0.1, 5.0),  # Increase minimum loss reduction required for split
+                "reg_alpha": trial.suggest_float("reg_alpha", 0.1, 10.0, log=True),  # Enhance L1 regularization
+                "reg_lambda": trial.suggest_float("reg_lambda", 1.0, 10.0, log=True),  # Enhance L2 regularization
+                "scale_pos_weight": 1,  # Balance weights
+                "base_score": 0.5,  # Initial prediction score
+                "max_delta_step": trial.suggest_int("max_delta_step", 0, 5),  # Limit weight estimate for each tree
+                "grow_policy": "depthwise",  # Standard growth policy
                 "n_jobs": n_jobs,
                 "random_state": 42,
                 "tree_method": "hist",
-                # 移除早停机制，因为LOO交叉验证中没有提供验证集
-                # "early_stopping_rounds": 10,  # 10轮无改善则停止
+                # Remove early stopping mechanism, as no validation set is provided in LOO cross-validation
+                # "early_stopping_rounds": 10,  # Stop after 10 rounds without improvement
             }
         elif model_class == LGBMRegressor:
             params = {
@@ -160,7 +160,7 @@ def train_and_evaluate(model_class, X, y, random_state=42, n_trials=100, n_jobs=
                 "random_state": 42,
             }
         elif model_class == MLPRegressor:
-            # 简化网络结构，调整参数范围
+            # Simplify network structure, adjust parameter ranges
             hidden_layer_choices = [
                 (20,),
                 (50,),
@@ -170,24 +170,24 @@ def train_and_evaluate(model_class, X, y, random_state=42, n_trials=100, n_jobs=
             params = {
                 "hidden_layer_sizes": trial.suggest_categorical(
                     "hidden_layer_sizes",
-                    hidden_layer_choices  # 直接使用元组列表
+                    hidden_layer_choices  # Directly use tuple list
                 ),
                 "activation": trial.suggest_categorical(
                     "activation", ["relu", "tanh"]
                 ),
-                "alpha": trial.suggest_float("alpha", 1e-3, 1e-1, log=True),  # 增大正则化范围
-                "learning_rate": "adaptive",  # 使用自适应学习率
+                "alpha": trial.suggest_float("alpha", 1e-3, 1e-1, log=True),  # Increase regularization range
+                "learning_rate": "adaptive",  # Use adaptive learning rate
                 "learning_rate_init": trial.suggest_float(
-                    "learning_rate_init", 1e-2, 1e-1, log=True  # 增大初始学习率
+                    "learning_rate_init", 1e-2, 1e-1, log=True  # Increase initial learning rate
                 ),
-                "max_iter": 2000,  # 增加最大迭代次数
+                "max_iter": 2000,  # Increase max iterations
                 "early_stopping": True,
                 "validation_fraction": 0.2,
-                "n_iter_no_change": 20,  # 减少早停所需迭代次数
-                "tol": 1e-3,  # 放宽收敛条件
+                "n_iter_no_change": 20,  # Reduce iterations needed for early stopping
+                "tol": 1e-3,  # Relax convergence condition
                 "random_state": 42,
-                "solver": "adam",  # 明确使用adam优化器
-                "batch_size": "auto",  # 自动选择批量大小
+                "solver": "adam",  # Explicitly use adam optimizer
+                "batch_size": "auto",  # Automatically select batch size
             }
         elif model_class == AdaBoostRegressor:
             params = {
@@ -198,14 +198,14 @@ def train_and_evaluate(model_class, X, y, random_state=42, n_trials=100, n_jobs=
             }
         elif model_class == KNeighborsRegressor:
             params = {
-                "n_neighbors": trial.suggest_int("n_neighbors", 10, 25),  # 增加邻居数量范围，减轻过拟合
-                "weights": trial.suggest_categorical("weights", ["uniform", "distance"]),  # 保留两种权重选项
-                "algorithm": trial.suggest_categorical("algorithm", ["auto", "ball_tree", "kd_tree"]),  # 添加算法选择
+                "n_neighbors": trial.suggest_int("n_neighbors", 10, 25),  # Increase neighbor range to reduce overfitting
+                "weights": trial.suggest_categorical("weights", ["uniform", "distance"]),  # Keep both weight options
+                "algorithm": trial.suggest_categorical("algorithm", ["auto", "ball_tree", "kd_tree"]),  # Add algorithm selection
                 "metric": trial.suggest_categorical(
                     "metric", ["minkowski", "euclidean", "manhattan", "chebyshev"]
-                ),  # 扩展距离度量选择
-                "p": trial.suggest_int("p", 1, 3) if trial.params.get("metric", "") == "minkowski" else 2,  # 只在minkowski时调整p
-                "leaf_size": trial.suggest_int("leaf_size", 20, 60),  # 增加leaf_size下限以提高稳定性
+                ),  # Expand distance metric options
+                "p": trial.suggest_int("p", 1, 3) if trial.params.get("metric", "") == "minkowski" else 2,  # Only adjust p for minkowski
+                "leaf_size": trial.suggest_int("leaf_size", 20, 60),  # Increase leaf_size lower bound for better stability
                 "n_jobs": n_jobs
             }
         else:
@@ -250,7 +250,7 @@ def train_and_evaluate(model_class, X, y, random_state=42, n_trials=100, n_jobs=
     study = optuna.create_study(
         sampler=sampler, 
         direction="minimize",
-        storage=f"sqlite:///optuna_optimization_{model_class.__name__}.db"  # 自动创建文件
+        storage=f"sqlite:///optuna_optimization_{model_class.__name__}.db"  # Automatically create file
     )
     study.optimize(objective, n_jobs=n_jobs, n_trials=n_trials)
 
@@ -261,7 +261,7 @@ def train_and_evaluate(model_class, X, y, random_state=42, n_trials=100, n_jobs=
     scaler_X = MinMaxScaler()
     scaler_y = MinMaxScaler(feature_range=(0, 100))
     
-    # 获得随机数为42情况下的性能表现
+    # Get performance with random_state=42
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42
     )

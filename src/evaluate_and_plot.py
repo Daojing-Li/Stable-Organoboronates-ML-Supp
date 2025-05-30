@@ -90,7 +90,6 @@ def evaluate_and_plot(
             fontname="Arial",
         )
         # plt.show()
-        # plt.savefig(f"/home/ldj/Code/Projects/Stable-Organoboronates-ML-Supp/output/{model_name}_{filename}.png")
 
 
 def evaluate_and_plot_with_abnormal_points(

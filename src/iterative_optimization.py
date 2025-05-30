@@ -8,7 +8,7 @@ import numpy as np
 
 # Set matplotlib backend to non-interactive
 import matplotlib
-matplotlib.use('Agg')  # 必须在导入pyplot之前设置
+matplotlib.use('Agg')  # Must be set before importing pyplot
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 

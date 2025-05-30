@@ -30,24 +30,24 @@ def feature_importance_analysis(
     importances = None
     shap_values = None
     
-    # 根据数据量确定聚类中心数量（约15%的数据量）
+    # Determine the number of clusters based on data size (about 15% of data size)
     n_clusters = max(10, min(15, int(len(X_train) * 0.15)))
-    # 用于计算SHAP值的样本数量（约30%的数据量）
+    # Number of samples for SHAP value calculation (about 30% of data size)
     n_samples = max(20, min(int(len(X_train) * 0.3), 100))
     
     if model_name in ["LinearRegression", "Ridge", "Lasso", "ElasticNet"]:
         explainer = shap.LinearExplainer(best_model, scaler.transform(X_train))
         shap_values = explainer.shap_values(scaler.transform(X_train))
     elif model_name in ["SVR"]:
-        # 对于SVR，使用KernelExplainer
-        logger.info(f"使用 {n_clusters} 个聚类中心作为背景数据")
-        logger.info(f"使用 {n_samples} 个样本计算SHAP值")
+        # For SVR, use KernelExplainer
+        logger.info(f"Using {n_clusters} cluster centers as background data")
+        logger.info(f"Using {n_samples} samples to calculate SHAP values")
         
-        # 使用K-means选择背景数据点，聚类数量根据数据量自适应
+        # Use K-means to select background data points, number of clusters adapts to data size
         background = shap.kmeans(scaler.transform(X_train), n_clusters)
         explainer = shap.KernelExplainer(best_model.predict, background)
         
-        # 随机选择样本计算SHAP值
+        # Randomly select samples to calculate SHAP values
         sample_indices = np.random.choice(len(X_train), n_samples, replace=False)
         X_sample = X_train.iloc[sample_indices]
         shap_values = explainer.shap_values(scaler.transform(X_sample))
@@ -63,12 +63,12 @@ def feature_importance_analysis(
         shap_values = explainer.shap_values(scaler.transform(X_train))
         importances = np.abs(shap_values).mean(0)
     elif model_name in ["AdaBoost"]:
-        # 对于AdaBoost，使用feature_importances_
+        # For AdaBoost, use feature_importances_
         importances = best_model.feature_importances_
     elif model_name in ["MLP", "KNR"]:
-        # 对于MLP和KNR，使用与SVR相同的方法
-        logger.info(f"使用 {n_clusters} 个聚类中心作为背景数据")
-        logger.info(f"使用 {n_samples} 个样本计算SHAP值")
+        # For MLP and KNR, use the same method as SVR
+        logger.info(f"Using {n_clusters} cluster centers as background data")
+        logger.info(f"Using {n_samples} samples to calculate SHAP values")
         
         background = shap.kmeans(scaler.transform(X_train), n_clusters)
         explainer = shap.KernelExplainer(best_model.predict, background)
@@ -81,20 +81,20 @@ def feature_importance_analysis(
         raise ValueError(f"Unsupported model type for SHAP analysis: {model_name}")
 
     if model_name in ["RandomForest", "GradientBoosting", "XGBoost", "LightGBM", "AdaBoost"]:
-        # 对于基于树的模型，直接使用feature_importances_
+        # For tree-based models, directly use feature_importances_
         feature_importance = importances
     elif model_name in ["LinearRegression", "Ridge", "Lasso", "ElasticNet"]:
-        # 对于线性模型，使用系数的绝对值
+        # For linear models, use the absolute value of coefficients
         feature_importance = np.abs(importances) if importances is not None else np.abs(shap_values).mean(0)
-    elif model_name in ["SVR", "MLP", "KNR"]:  # 这些模型已经在上面计算过了
-        pass  # feature_importance已经计算好了
+    elif model_name in ["SVR", "MLP", "KNR"]:  # These models have already been calculated above
+        pass  # feature_importance has already been calculated
     else:
-        # 确保shap_values不为None
+        # Ensure shap_values is not None
         if shap_values is not None:
             feature_importance = np.mean(np.abs(shap_values), axis=0)
         else:
-            logger.error(f"无法计算特征重要性: {model_name}的shap_values为None")
-            # 返回均匀分布的特征重要性
+            logger.error(f"Unable to calculate feature importance: shap_values for {model_name} is None")
+            # Return uniformly distributed feature importance
             feature_importance = np.ones(len(X_train.columns)) / len(X_train.columns)
 
     total_importance = np.sum(feature_importance)
@@ -103,10 +103,10 @@ def feature_importance_analysis(
     # Plot feature importance
     if mae_mean < mae_threshold and shap_values is not None:
         if model_name in ["SVR", "MLP", "KNR"]:
-            # 对于使用部分样本的模型，使用相同的样本进行可视化
+            # For models using partial samples, use the same samples for visualization
             shap.summary_plot(
                 shap_values, 
-                scaler.transform(X_sample),  # 使用与SHAP值计算相同的数据
+                scaler.transform(X_sample),  # Use the same data as SHAP value calculation
                 feature_names=X_train.columns, 
                 plot_type="bar"
             )

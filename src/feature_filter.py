@@ -41,7 +41,7 @@ def feature_filter(models, X, y, n_trials=50, min_features=5, max_features=8, ma
         final_features = []
         result = []
         num_features = min(len(X_model.columns), max_features)
-        min_feat = max(1, min(min_features, num_features))  # 确保min_features在有效范围内
+        min_feat = max(1, min(min_features, num_features))
         for r in range(min_feat, num_features + 1):
             feature_combinations = itertools.combinations(X_model.columns, r)
             for feature_combination in feature_combinations:
