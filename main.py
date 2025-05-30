@@ -17,6 +17,8 @@ from src.visualization import plot_r2_on_100_random_samples, plot_scatter
 
 # Set optuna logging level
 from src.logger_config import setup_logger
+import os
+os.makedirs('models', exist_ok=True)
 logger = setup_logger("models")
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
@@ -29,7 +31,7 @@ models = {
     # 'LinearRegression': LinearRegression,
     # 'Ridge': Ridge,
     # 'Lasso': Lasso,
-    # 'SVR': SVR,
+    'SVR': SVR,
     # 'DecisionTree': DecisionTreeRegressor,
     # 'RandomForest': RandomForestRegressor,
     # 'GradientBoosting': GradientBoostingRegressor,
@@ -68,7 +70,7 @@ def main():
     args = parser.parse_args()
     
     # Read data
-    data = pd.read_csv('data_round2.csv')
+    data = pd.read_csv('example/data_round2.csv')
     features = data.select_dtypes(include=[np.number]).columns
     X = data[features].drop('yield', axis=1)
     # X = X.drop(columns=['sub_H']) # Delete sub_H column used as sequence

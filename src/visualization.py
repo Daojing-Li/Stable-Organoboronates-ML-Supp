@@ -193,7 +193,7 @@ def calculate_metrics(y_train, y_pred_train, y_test, y_pred_test):
         'mae_test': mean_absolute_error(y_test, y_pred_test)
     }
 
-def add_plot_labels(metrics, mae_mean,model_name):
+def add_plot_labels(metrics, mae_mean,model_name,r2_loo):
 
 
     """添加图表标签和文本"""

@@ -21,7 +21,7 @@ from src.evaluate_and_plot import evaluate_and_plot
 from src.leave_one_out_validation import leave_one_out_validation
 from src.logger_config import setup_logger
 from sklearn.preprocessing import MinMaxScaler
-from utils.visualization import plot_scatter
+from src.visualization import plot_scatter
 
 # Set default font
 plt.rcParams['font.family'] = 'DejaVu Sans'
