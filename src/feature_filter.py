@@ -11,7 +11,7 @@ import optuna
 from src.leave_one_out_validation import leave_one_out_validation
 
 from src.logger_config import setup_logger
-logger = setup_logger("output")
+logger = setup_logger("models")
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
 def feature_filter(models, X, y, n_trials=50, min_features=5, max_features=8, mae_threshold=16):
@@ -93,7 +93,7 @@ def feature_filter(models, X, y, n_trials=50, min_features=5, max_features=8, ma
                     r2_test = r2_score(y_test, y_pred_test)
                     mae_test = mean_absolute_error(y_test, y_pred_test)
                     r2_loo = leave_one_out_validation(best_model, scaler_X, X_train, y)
-                    logger.info(f"r2_loo: {r2_loo}")
+                    # logger.info(f"r2_loo: {r2_loo}")
                     result.append(
                         {
                             "mae_mean": mae_mean,
