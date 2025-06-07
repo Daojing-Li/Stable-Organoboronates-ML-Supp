@@ -1,11 +1,10 @@
 # Machine Learning Tool for Organoboronate Reactivity Prediction
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)]()
-[![License](https://img.shields.io/badge/License-MIT-green)]()
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)]() [![License](https://img.shields.io/badge/License-MIT-green)]() [![DOI](https://img.shields.io/badge/DOI-10.1038%2Fs41467--025--60674--9-blue)](https://doi.org/10.1038/s41467-025-60674-9)
 
 [English](README.md) | [中文](README_CN.md)
 
-This project is a supplementary material for the machine learning component of our research paper "**Organometallic-type reactivity of stable organoboronates for selective (hetero)arene C−H/C-halogen borylation and beyond**". It contains machine learning models and analysis tools for predicting the yields of organoboronate reactions.
+This project is a supplementary material for the machine learning component of our research paper "[**Organometallic-type reactivity of stable organoboronates for selective (hetero)arene C−H/C-halogen borylation and beyond**](https://doi.org/10.1038/s41467-025-60674-9)". It contains machine learning models and analysis tools for predicting the yields of organoboronate reactions.
 
 ## Table of Contents
 

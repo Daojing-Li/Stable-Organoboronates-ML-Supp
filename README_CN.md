@@ -1,11 +1,10 @@
 # 有机硼化合物反应性预测的机器学习工具
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)]()
-[![License](https://img.shields.io/badge/License-MIT-green)]()
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)]() [![License](https://img.shields.io/badge/License-MIT-green)]() [![DOI](https://img.shields.io/badge/DOI-10.1038%2Fs41467--025--60674--9-blue)](https://doi.org/10.1038/s41467-025-60674-9)
 
 [English](README.md) | [中文](README_CN.md)
 
-这个项目是我们研究论文"**Organometallic-type reactivity of stable organoboronates for selective (hetero)arene C−H/C-halogen borylation and beyond**"的机器学习部分的补充材料。它包含了用于预测有机硼化合物反应产率的机器学习模型和分析工具。
+这个项目是我们研究论文"[**Organometallic-type reactivity of stable organoboronates for selective (hetero)arene C−H/C-halogen borylation and beyond**](https://doi.org/10.1038/s41467-025-60674-9)"的机器学习部分的补充材料。它包含了用于预测有机硼化合物反应产率的机器学习模型和分析工具。
 
 ## 目录
 
